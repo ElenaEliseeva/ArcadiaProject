@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindersApp", "RemindersApp\RemindersApp.csproj", "{3CF425E7-6BA2-4203-9357-C1BDD42AE8E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CF425E7-6BA2-4203-9357-C1BDD42AE8E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CF425E7-6BA2-4203-9357-C1BDD42AE8E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CF425E7-6BA2-4203-9357-C1BDD42AE8E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CF425E7-6BA2-4203-9357-C1BDD42AE8E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F7B615D-81BD-4116-B9EB-C293FFA9C56A}
+	EndGlobalSection
+EndGlobal
