@@ -1,23 +1,9 @@
 ﻿import { Component } from '@angular/core';
 import { strict } from 'assert';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpService } from './http.service';
+import { Reminder } from './reminder/reminder';
 
-class Reminder {
-    id: number;
-    body: string;
-    timeToWork: string; 
-    idPriority: number;
-    idCookie: number;
-
-
-    constructor(id: number, body: string, timeToWork: string, idPriority: number, idCookie: number) {
-        this.id =id;
-        this.body = body;
-        this.timeToWork = timeToWork; 
-        this.idPriority = idPriority;
-        this.idCookie = idCookie;
-    }
-}
 
 @Component({
     selector: 'purchase-app',
@@ -26,20 +12,18 @@ class Reminder {
 
 export class AppComponent {
     appForm: FormGroup;
-    constructor() {
-        this.appForm = new FormGroup({
+    reminders: Reminder[] = [];
 
+    constructor(private httpService: HttpService) {
+        this.appForm = new FormGroup({
             "remindersBody": new FormControl("Текст напоминания", Validators.required),
             "remindersDate": new FormControl("", [Validators.required]),
         });
     }
-
-    reminders: Reminder[] =
-        [
-            { id: 1, body: "Купить хлеб", timeToWork: "2020", idPriority: 1, idCookie: 1 },
-            { id: 2, body: "Купить колбасу", timeToWork: "2020", idPriority: 1, idCookie: 1 },
-            { id: 3, body: "Купить слона", timeToWork: "2020", idPriority: 1, idCookie: 1 }
-        ];
+  
+    ngOnInit() {
+        //this.httpService.getReminders().subscribe(data => this.reminders = dat);
+    }
 
     addItem(body: string, date: JSON, time: JSON): void {
 

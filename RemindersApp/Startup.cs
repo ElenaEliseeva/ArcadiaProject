@@ -31,21 +31,30 @@ namespace RemindersApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseRouting();
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers(); // подключаем маршрутизацию на контроллеры
+                });
             }
 
-            app.Run(async (context) =>
-            {
-                string login;
-                if (context.Request.Cookies.TryGetValue("name", out login))
-                {
-                    await context.Response.WriteAsync($"Hello {login}!");
-                }
-                else
-                {
-                    context.Response.Cookies.Append("name", "Tom");
-                    await context.Response.WriteAsync("Hello World!");
-                }
-            });
+            
+
+            /* app.Run(async (context) =>
+             {
+                 string login;
+                 if (context.Request.Cookies.TryGetValue("name", out login))
+                 {
+                     await context.Response.WriteAsync($"Hello {login}!");
+                 }
+                 else
+                 {
+                     context.Response.Cookies.Append("name", "Tom");
+                     await context.Response.WriteAsync("Hello World!");
+                 }
+             });*/
         }
     }
 }

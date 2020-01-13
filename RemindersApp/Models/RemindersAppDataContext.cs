@@ -36,7 +36,7 @@ namespace RemindersApp.Models
 
                 entity.Property(e => e.IdCookie)
                     .HasColumnName("id_cookie")
-                    .ValueGeneratedNever();
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Cookie)
                     .IsRequired()
@@ -49,7 +49,7 @@ namespace RemindersApp.Models
 
                 entity.Property(e => e.IdPriority)
                     .HasColumnName("id_priority")
-                    .ValueGeneratedNever();
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Priority)
                     .IsRequired()
@@ -62,7 +62,7 @@ namespace RemindersApp.Models
 
                 entity.Property(e => e.IdReminder)
                     .HasColumnName("id_reminder")
-                    .ValueGeneratedNever();
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Body)
                     .IsRequired()

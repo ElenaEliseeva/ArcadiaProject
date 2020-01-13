@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RemindersApp.Models;
 
 namespace RemindersApp.Controllers
@@ -20,10 +21,9 @@ namespace RemindersApp.Controllers
 
         // GET: api/Reminders
         [HttpGet]
-        public List<string> Get()
+        public async Task<ActionResult<IEnumerable<Reminders>>> Get()
         {
-            var remainders = ctx.Reminders.Select(r => r.Body).ToList();
-            return remainders;
+            return await ctx.Reminders.ToListAsync();
         }
 
         // GET: api/Reminders/5
