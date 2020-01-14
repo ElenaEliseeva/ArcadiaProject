@@ -47,11 +47,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let reminder of reminders">
-                    <td>{{reminder.id}}</td>
-                    <td>{{reminder.body}}</td>
-                    <td>{{reminder.timeToWork}}</td>
-                    <td>{{reminder.idPriority}}</td>
-                    <td>{{reminder.idCookie}}</td>
+                    <td>{{reminder?.id}}</td>
+                    <td>{{reminder?.body}}</td>
+                    <td>{{reminder?.timeToWork}}</td>
+                    <td>{{reminder?.idPriority}}</td>
+                    <td>{{reminder?.idCookie}}</td>
                 </tr>
             </tbody>
         </table>

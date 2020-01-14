@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RemindersApp.Models;
+using System;
 
 namespace RemindersApp
 {
@@ -40,21 +41,6 @@ namespace RemindersApp
                 });
             }
 
-            
-
-            /* app.Run(async (context) =>
-             {
-                 string login;
-                 if (context.Request.Cookies.TryGetValue("name", out login))
-                 {
-                     await context.Response.WriteAsync($"Hello {login}!");
-                 }
-                 else
-                 {
-                     context.Response.Cookies.Append("name", "Tom");
-                     await context.Response.WriteAsync("Hello World!");
-                 }
-             });*/
         }
     }
 }
