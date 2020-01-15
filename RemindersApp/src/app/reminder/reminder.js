@@ -1,6 +1,6 @@
 var Reminder = /** @class */ (function () {
-    function Reminder(id, body, timeToWork, idPriority, idCookie) {
-        this.id = id;
+    function Reminder(idReminder, body, timeToWork, idPriority, idCookie) {
+        this.idReminder = idReminder;
         this.body = body;
         this.timeToWork = timeToWork;
         this.idPriority = idPriority;

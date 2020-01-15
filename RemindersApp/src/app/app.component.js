@@ -8,17 +8,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from './data.service';
+import { Reminder } from './reminder/reminder';
 var AppComponent = /** @class */ (function () {
     function AppComponent(dataService) {
         this.dataService = dataService;
         this.date = { year: 2020, month: 1, day: 30 };
         this.time = { hour: 13, minute: 30 };
-        this.appForm = new FormGroup({
-            "remindersBody": new FormControl("Текст напоминания", Validators.required),
-            "remindersDate": new FormControl("", Validators.required),
-        });
+        this.body = "";
     }
     AppComponent.prototype.ngOnInit = function () {
         this.loadReminders();
@@ -28,11 +25,37 @@ var AppComponent = /** @class */ (function () {
         this.dataService.getReminders()
             .subscribe(function (data) { return _this.reminders = data; });
     };
-    AppComponent.prototype.addItem = function (body, date, time) {
-        if (body == null || body.trim() == "")
-            return;
-        /*var timeToWork = date['year'] + "/" + date['month'] + "/" + date['day'] + " " + time['hour'] + ":" + time['hour'];
-        this.reminders.push(new Reminder(4, body, timeToWork, 1, 1));*/
+    AppComponent.prototype.save = function () {
+        var _this = this;
+        if (this.reminder.idReminder == null) {
+            this.dataService.createReminder(this.reminder)
+                .subscribe(function (data) { return _this.reminders.push(data); });
+        }
+        else {
+            this.dataService.updateReminder(this.reminder)
+                .subscribe(function (data) { return _this.loadReminders(); });
+        }
+        this.cancel();
+    };
+    AppComponent.prototype.editReminder = function (r) {
+        this.reminder = r;
+    };
+    AppComponent.prototype.cancel = function () {
+        this.reminder = this.newReminder();
+    };
+    AppComponent.prototype.delete = function (r) {
+        var _this = this;
+        this.dataService.deleteReminder(r.idReminder)
+            .subscribe(function (data) { return _this.loadReminders(); });
+    };
+    AppComponent.prototype.add = function () {
+        this.cancel();
+        this.save();
+    };
+    AppComponent.prototype.newReminder = function () {
+        var timeToWork = this.date['year'] + "/" + this.date['month'] + "/" + this.date['day'] + " "
+            + this.time['hour'] + ":" + this.time['hour'];
+        return new Reminder(null, this.body, timeToWork, 1, 1);
     };
     AppComponent = __decorate([
         Component({

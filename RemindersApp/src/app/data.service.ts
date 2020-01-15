@@ -20,10 +20,10 @@ export class DataService {
 
     updateReminder(reminder: Reminder) {
 
-        return this.http.put(this.url + '/' + reminder.id, reminder);
+        return this.http.put(this.url + '/' + reminder.idReminder, reminder);
     }
 
-    deleteReminder(id: number) {
-        return this.http.delete(this.url + '/' + id);
+    deleteReminder(idReminder: number) {
+        return this.http.delete(this.url + '/' + idReminder);
     }
 }

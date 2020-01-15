@@ -21,10 +21,10 @@ var DataService = /** @class */ (function () {
         return this.http.post(this.url, reminder);
     };
     DataService.prototype.updateReminder = function (reminder) {
-        return this.http.put(this.url + '/' + reminder.id, reminder);
+        return this.http.put(this.url + '/' + reminder.idReminder, reminder);
     };
-    DataService.prototype.deleteReminder = function (id) {
-        return this.http.delete(this.url + '/' + id);
+    DataService.prototype.deleteReminder = function (idReminder) {
+        return this.http.delete(this.url + '/' + idReminder);
     };
     DataService = __decorate([
         Injectable(),

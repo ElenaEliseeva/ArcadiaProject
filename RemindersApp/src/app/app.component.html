@@ -3,17 +3,17 @@
     <div class="row align-items-center my-3">
 
         <div class="col-md-auto">
-            <form class="form-inline" [formGroup]="appForm">
+            <form class="form-inline">
 
                 <div class="form-group mx-sm-3 mb-2">
                     <div class="input-group ">
-                        <input class="form-control" [(ngModel)]="body" formControlName="remindersBody" />
+                        <input class="form-control" [(ngModel)]="body"  />
                     </div>
                 </div>
 
                 <div class="form-group mx-sm-3 mb-2">
                     <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd" formControlName="remindersDate"
+                        <input class="form-control" placeholder="yyyy-mm-dd" 
                                name="dp" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="col mx-sm-3 mb-2">
-            <button class="btn btn-outline-primary" (click)="addItem(body, date, time)">Добавить</button>
+            <button class="btn btn-outline-primary" (click)="add()">Добавить</button>
         </div>
 
     </div>

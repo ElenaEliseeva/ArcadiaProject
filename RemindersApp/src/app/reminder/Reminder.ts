@@ -5,8 +5,8 @@
     idPriority: number;
     idCookie: number;
 
-    constructor(id: number, body: string, timeToWork: string, idPriority: number, idCookie: number) {
-        this.idReminder = id;
+    constructor(idReminder: number, body: string, timeToWork: string, idPriority: number, idCookie: number) {
+        this.idReminder = idReminder;
         this.body = body;
         this.timeToWork = timeToWork;
         this.idPriority = idPriority;

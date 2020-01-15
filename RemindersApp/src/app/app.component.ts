@@ -15,18 +15,15 @@ export class AppComponent implements OnInit {
 
     reminder: Reminder;
     reminders: Reminder[];
-    appForm: FormGroup;
+    date = { year: 2020, month: 1, day: 30 };
+    time = { hour: 13, minute: 30 };
+    body = "";
     
 
     constructor(private dataService: DataService) {
-        this.appForm = new FormGroup({
-            "remindersBody": new FormControl("Текст напоминания", Validators.required),
-            "remindersDate": new FormControl("", Validators.required),
-        });
     }
   
     ngOnInit() {
-
         this.loadReminders();
     }
 
@@ -35,15 +32,40 @@ export class AppComponent implements OnInit {
             .subscribe((data: Reminder[]) => this.reminders = data);
     }
 
-    addItem(body: string, date: JSON, time: JSON): void {
-
-        if (body == null || body.trim() == "")
-            return;
-
-        /*var timeToWork = date['year'] + "/" + date['month'] + "/" + date['day'] + " " + time['hour'] + ":" + time['hour'];
-        this.reminders.push(new Reminder(4, body, timeToWork, 1, 1));*/
+    save() {
+        if (this.reminder.idReminder == null) {
+            this.dataService.createReminder(this.reminder)
+                .subscribe((data: Reminder) => this.reminders.push(data));
+        } else {
+            this.dataService.updateReminder(this.reminder)
+                .subscribe(data => this.loadReminders());
+        }
+        this.cancel();
     }
 
-    date = { year: 2020, month: 1, day: 30};
-    time = { hour: 13, minute: 30 };
+    editReminder(r: Reminder) {
+        this.reminder = r;
+    }
+
+    cancel() {
+        this.reminder = this.newReminder();
+    }
+
+    delete(r: Reminder) {
+        this.dataService.deleteReminder(r.idReminder)
+            .subscribe(data => this.loadReminders());
+    }
+
+    add() {
+        this.cancel();
+        this.save();
+    }
+
+    newReminder(): Reminder {
+        var timeToWork = this.date['year'] + "/" + this.date['month'] + "/" + this.date['day'] + " "
+            + this.time['hour'] + ":" + this.time['hour'];
+        return new Reminder(null, this.body, timeToWork, 1, 1);
+    }
+
+    
 }
