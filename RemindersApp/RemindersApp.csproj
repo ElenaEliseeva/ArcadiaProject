@@ -13,7 +13,7 @@
   <ItemGroup>
     <None Remove="src\app\app.component.ts" />
     <None Remove="src\app\app.module.ts" />
-    <None Remove="src\app\http.service.ts" />
+    <None Remove="src\app\data.service.ts" />
     <None Remove="src\app\Reminder.ts" />
     <None Remove="src\main.ts" />
     <None Remove="src\polyfills.ts" />

@@ -41,10 +41,19 @@ namespace RemindersApp
                 {
                     HotModuleReplacement = true
                 });
+
+                app.UseRouting();
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
             } 
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            
         }
     }
 }

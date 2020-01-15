@@ -1,21 +1,24 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { strict } from 'assert';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpService } from './http.service';
+import { DataService } from './data.service';
 import { Reminder } from './reminder/reminder';
 
 
 @Component({
     selector: 'purchase-app',
     templateUrl: './app.component.html',
-    providers: [HttpService]
+    providers: [DataService]
 })
 
 export class AppComponent implements OnInit {
-    appForm: FormGroup;
-    reminders: Reminder[] = [];
 
-    constructor(private httpService: HttpService) {
+    reminder: Reminder;
+    reminders: Reminder[];
+    appForm: FormGroup;
+    
+
+    constructor(private dataService: DataService) {
         this.appForm = new FormGroup({
             "remindersBody": new FormControl("Текст напоминания", Validators.required),
             "remindersDate": new FormControl("", Validators.required),
@@ -23,7 +26,13 @@ export class AppComponent implements OnInit {
     }
   
     ngOnInit() {
-        this.httpService.getReminders().subscribe(data => this.reminders = data);
+
+        this.loadReminders();
+    }
+
+    loadReminders() {
+        this.dataService.getReminders()
+            .subscribe((data: Reminder[]) => this.reminders = data);
     }
 
     addItem(body: string, date: JSON, time: JSON): void {

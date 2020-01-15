@@ -28,9 +28,12 @@ namespace RemindersApp.Controllers
 
         // GET: api/Reminders/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<ActionResult<Reminders>> Get(int id)
         {
-            return ctx.Reminders.Find(id).Body;
+            Reminders reminder  = await ctx.Reminders.FirstOrDefaultAsync(x => x.IdReminder == id);
+            if (reminder == null)
+                return NotFound();
+            return new ObjectResult(reminder);
         }
 
         // POST: api/Reminders

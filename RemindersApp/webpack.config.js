@@ -3,8 +3,8 @@ const webpack = require('webpack');
 module.exports = {
     mode: 'development',
     entry: {
-        'polyfills': './polyfills.ts',
-        'app': './main.ts'
+        'polyfills': './src/polyfills.ts',
+        'app': './src/main.ts'
       },
    output:{
        path: path.resolve(__dirname, './wwwroot/dist'),     

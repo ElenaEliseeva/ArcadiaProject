@@ -9,11 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpService } from './http.service';
+import { DataService } from './data.service';
 var AppComponent = /** @class */ (function () {
-    function AppComponent(httpService) {
-        this.httpService = httpService;
-        this.reminders = [];
+    function AppComponent(dataService) {
+        this.dataService = dataService;
         this.date = { year: 2020, month: 1, day: 30 };
         this.time = { hour: 13, minute: 30 };
         this.appForm = new FormGroup({
@@ -22,8 +21,12 @@ var AppComponent = /** @class */ (function () {
         });
     }
     AppComponent.prototype.ngOnInit = function () {
+        this.loadReminders();
+    };
+    AppComponent.prototype.loadReminders = function () {
         var _this = this;
-        this.httpService.getReminders().subscribe(function (data) { return _this.reminders = data; });
+        this.dataService.getReminders()
+            .subscribe(function (data) { return _this.reminders = data; });
     };
     AppComponent.prototype.addItem = function (body, date, time) {
         if (body == null || body.trim() == "")
@@ -35,9 +38,9 @@ var AppComponent = /** @class */ (function () {
         Component({
             selector: 'purchase-app',
             templateUrl: './app.component.html',
-            providers: [HttpService]
+            providers: [DataService]
         }),
-        __metadata("design:paramtypes", [HttpService])
+        __metadata("design:paramtypes", [DataService])
     ], AppComponent);
     return AppComponent;
 }());
