@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RemindersApp.Models;
 using System;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 
 namespace RemindersApp
 {
@@ -27,20 +28,23 @@ namespace RemindersApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+        [System.Obsolete("Use Microsoft.AspNetCore.SpaServices.Extensions")]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
 
-                app.UseRouting();
-
-                app.UseEndpoints(endpoints =>
+                // добавляем сборку через webpack
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {
-                    endpoints.MapControllers(); // подключаем маршрутизацию на контроллеры
+                    HotModuleReplacement = true
                 });
-            }
+            } 
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
         }
     }
 }

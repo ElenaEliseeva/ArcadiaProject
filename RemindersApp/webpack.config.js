@@ -1,22 +1,23 @@
 ﻿const path = require('path');
 const webpack = require('webpack');
 module.exports = {
+    mode: 'development',
     entry: {
-        'polyfills': './src/polyfills.ts',
-        'app': './src/main.ts'
+        'polyfills': './polyfills.ts',
+        'app': './main.ts'
       },
    output:{
-       path: path.resolve(__dirname, './public'),     // путь к каталогу выходных файлов - папка public
-       publicPath: '/public/',
-       filename: "[name].js"       // название создаваемого файла
+       path: path.resolve(__dirname, './wwwroot/dist'),     
+       publicPath: '/dist/',
+       filename: "[name].js"      
    },
    resolve: {
     extensions: ['.ts', '.js']
   },
    module:{
-       rules:[   //загрузчик для ts
+       rules:[  
            {
-               test: /\.ts$/, // определяем тип файлов
+               test: /\.ts$/, 
                use: [
                    {
                    loader: 'awesome-typescript-loader',
