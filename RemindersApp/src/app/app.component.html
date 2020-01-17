@@ -3,18 +3,18 @@
     <div class="row align-items-center my-3">
 
         <div class="col-md-auto">
-            <form class="form-inline" [formGroup]="appForm">
+            <form class="form-inline">
 
                 <div class="form-group mx-sm-3 mb-2">
                     <div class="input-group ">
-                        <input class="form-control" [(ngModel)]="body" formControlName="remindersBody" />
+                        <input class="form-control" [(ngModel)]="body"  name="body"/>
                     </div>
                 </div>
 
                 <div class="form-group mx-sm-3 mb-2">
                     <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd" formControlName="remindersDate"
-                               name="dp" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
+                        <input class="form-control" placeholder="yyyy-mm-dd" 
+                               name="date" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
                         </div>
@@ -25,11 +25,11 @@
         </div>
 
         <div class="col mx-sm-3 mb-2">
-            <ngb-timepicker [(ngModel)]="time" [spinners]="false"></ngb-timepicker>
+            <ngb-timepicker [(ngModel)]="time" name = "time" [spinners]="false"></ngb-timepicker>
         </div>
 
         <div class="col mx-sm-3 mb-2">
-            <button class="btn btn-outline-primary" (click)="addItem(body, date, time)">Добавить</button>
+            <button class="btn btn-outline-primary" (click)="add()">Добавить</button>
         </div>
 
     </div>
@@ -47,11 +47,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let reminder of reminders">
-                    <td>{{reminder.id}}</td>
-                    <td>{{reminder.body}}</td>
-                    <td>{{reminder.timeToWork}}</td>
-                    <td>{{reminder.idPriority}}</td>
-                    <td>{{reminder.idCookie}}</td>
+                    <td>{{reminder?.idReminder}}</td>
+                    <td>{{reminder?.body}}</td>
+                    <td>{{reminder?.timeToWork}}</td>
+                    <td>{{reminder?.idPriority}}</td>
+                    <td>{{reminder?.idCookie}}</td>
                 </tr>
             </tbody>
         </table>
