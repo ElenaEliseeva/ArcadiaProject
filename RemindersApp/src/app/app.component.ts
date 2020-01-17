@@ -1,8 +1,10 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { strict } from 'assert';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CookieService } from "ngx-cookie-service";
+
 import { DataService } from './data.service';
-import { Reminder } from './reminder/reminder';
+import { Reminder } from './models/reminder';
 
 
 @Component({
@@ -17,15 +19,28 @@ export class AppComponent implements OnInit {
     reminders: Reminder[];
     date = { year: 2020, month: 1, day: 30 };
     time = { hour: 13, minute: 30 };
-    body = "";
+    body: string;
+    cookie: string;
     
 
-    constructor(private dataService: DataService) {
+    constructor(private dataService: DataService, private cookieService: CookieService) {
     }
   
     ngOnInit() {
+        //this.identifyUser();
         this.loadReminders();
     }
+
+   /* identifyUser() {
+       if (this.cookieService.check("RemindersApp")) {
+            this.cookie = this.cookieService.get("RemindersApp");
+       }
+       else
+       { 
+           this.cookie = this.newCookieValue();
+           this.cookieService.set("RemindersApp", this.reminder.cookie);
+       }
+    }*/
 
     loadReminders() {
         this.dataService.getReminders()
@@ -64,8 +79,7 @@ export class AppComponent implements OnInit {
     newReminder(): Reminder {
         var timeToWork = this.date['year'] + "/" + this.date['month'] + "/" + this.date['day'] + " "
             + this.time['hour'] + ":" + this.time['hour'];
-        return new Reminder(null, this.body, timeToWork, 1, 1);
+        return new Reminder(this.body, timeToWork);
     }
-
     
 }

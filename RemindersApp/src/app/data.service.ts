@@ -1,6 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Reminder } from './reminder/reminder';
+import { Reminder } from './models/reminder';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class DataService {
@@ -10,20 +11,20 @@ export class DataService {
     constructor(private http: HttpClient) {
     }
 
-    getReminders() {
+    getReminders(): Observable<any> {
         return this.http.get(this.url);
     }
 
-    createReminder(reminder: Reminder) {
-        return this.http.post(this.url, reminder);
+    createReminder(reminder: Reminder) : Observable<any> {
+        return this.http.post(this.url, reminder, { responseType: 'text'});
     }
 
-    updateReminder(reminder: Reminder) {
+    updateReminder(reminder: Reminder) : Observable<any> {
 
-        return this.http.put(this.url + '/' + reminder.idReminder, reminder);
+        return this.http.put(this.url + '/' + reminder.idReminder, reminder, { responseType: 'text' });
     }
 
-    deleteReminder(idReminder: number) {
+    deleteReminder(idReminder: number): Observable<any> {
         return this.http.delete(this.url + '/' + idReminder);
     }
 }

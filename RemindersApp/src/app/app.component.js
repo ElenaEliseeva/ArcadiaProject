@@ -8,18 +8,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import { CookieService } from "ngx-cookie-service";
 import { DataService } from './data.service';
-import { Reminder } from './reminder/reminder';
+import { Reminder } from './models/reminder';
 var AppComponent = /** @class */ (function () {
-    function AppComponent(dataService) {
+    function AppComponent(dataService, cookieService) {
         this.dataService = dataService;
+        this.cookieService = cookieService;
         this.date = { year: 2020, month: 1, day: 30 };
         this.time = { hour: 13, minute: 30 };
-        this.body = "";
     }
     AppComponent.prototype.ngOnInit = function () {
+        //this.identifyUser();
         this.loadReminders();
     };
+    /* identifyUser() {
+        if (this.cookieService.check("RemindersApp")) {
+             this.cookie = this.cookieService.get("RemindersApp");
+        }
+        else
+        {
+            this.cookie = this.newCookieValue();
+            this.cookieService.set("RemindersApp", this.reminder.cookie);
+        }
+     }*/
     AppComponent.prototype.loadReminders = function () {
         var _this = this;
         this.dataService.getReminders()
@@ -55,7 +67,7 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.newReminder = function () {
         var timeToWork = this.date['year'] + "/" + this.date['month'] + "/" + this.date['day'] + " "
             + this.time['hour'] + ":" + this.time['hour'];
-        return new Reminder(null, this.body, timeToWork, 1, 1);
+        return new Reminder(this.body, timeToWork, this.cookie);
     };
     AppComponent = __decorate([
         Component({
@@ -63,7 +75,7 @@ var AppComponent = /** @class */ (function () {
             templateUrl: './app.component.html',
             providers: [DataService]
         }),
-        __metadata("design:paramtypes", [DataService])
+        __metadata("design:paramtypes", [DataService, CookieService])
     ], AppComponent);
     return AppComponent;
 }());

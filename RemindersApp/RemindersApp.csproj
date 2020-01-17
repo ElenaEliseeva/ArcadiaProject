@@ -36,10 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="src\app\reminder\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\index.html" />
   </ItemGroup>
 

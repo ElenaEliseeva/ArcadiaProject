@@ -7,14 +7,14 @@
 
                 <div class="form-group mx-sm-3 mb-2">
                     <div class="input-group ">
-                        <input class="form-control" [(ngModel)]="body"  />
+                        <input class="form-control" [(ngModel)]="body"  name="body"/>
                     </div>
                 </div>
 
                 <div class="form-group mx-sm-3 mb-2">
                     <div class="input-group">
                         <input class="form-control" placeholder="yyyy-mm-dd" 
-                               name="dp" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
+                               name="date" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
                         </div>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="col mx-sm-3 mb-2">
-            <ngb-timepicker [(ngModel)]="time" [spinners]="false"></ngb-timepicker>
+            <ngb-timepicker [(ngModel)]="time" name = "time" [spinners]="false"></ngb-timepicker>
         </div>
 
         <div class="col mx-sm-3 mb-2">

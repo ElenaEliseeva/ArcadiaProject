@@ -53,7 +53,6 @@ namespace RemindersApp
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            
         }
     }
 }

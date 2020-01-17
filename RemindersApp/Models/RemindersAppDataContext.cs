@@ -15,8 +15,6 @@ namespace RemindersApp.Models
         {
         }
 
-        public virtual DbSet<Cookies> Cookies { get; set; }
-        public virtual DbSet<Priorities> Priorities { get; set; }
         public virtual DbSet<Reminders> Reminders { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,32 +28,6 @@ namespace RemindersApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Cookies>(entity =>
-            {
-                entity.HasKey(e => e.IdCookie);
-
-                entity.Property(e => e.IdCookie)
-                    .HasColumnName("id_cookie")
-                    .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Cookie)
-                    .IsRequired()
-                    .HasColumnName("cookie");
-            });
-
-            modelBuilder.Entity<Priorities>(entity =>
-            {
-                entity.HasKey(e => e.IdPriority);
-
-                entity.Property(e => e.IdPriority)
-                    .HasColumnName("id_priority")
-                    .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Priority)
-                    .IsRequired()
-                    .HasColumnName("priority");
-            });
-
             modelBuilder.Entity<Reminders>(entity =>
             {
                 entity.HasKey(e => e.IdReminder);
@@ -68,22 +40,11 @@ namespace RemindersApp.Models
                     .IsRequired()
                     .HasColumnName("body");
 
-                entity.Property(e => e.IdCookie).HasColumnName("id_cookie");
-
-                entity.Property(e => e.IdPriority).HasColumnName("id_priority");
+                entity.Property(e => e.Cookie).HasColumnName("cookie");
 
                 entity.Property(e => e.TimeToWork)
                     .IsRequired()
                     .HasColumnName("time_to_work");
-
-                entity.HasOne(d => d.IdCookieNavigation)
-                    .WithMany(p => p.Reminders)
-                    .HasForeignKey(d => d.IdCookie)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(d => d.IdPriorityNavigation)
-                    .WithMany(p => p.Reminders)
-                    .HasForeignKey(d => d.IdPriority);
             });
 
             OnModelCreatingPartial(modelBuilder);
