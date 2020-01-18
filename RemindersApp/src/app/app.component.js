@@ -19,41 +19,12 @@ var AppComponent = /** @class */ (function () {
         this.time = { hour: 13, minute: 30 };
     }
     AppComponent.prototype.ngOnInit = function () {
-        //this.identifyUser();
         this.loadReminders();
     };
-    /* identifyUser() {
-        if (this.cookieService.check("RemindersApp")) {
-             this.cookie = this.cookieService.get("RemindersApp");
-        }
-        else
-        {
-            this.cookie = this.newCookieValue();
-            this.cookieService.set("RemindersApp", this.reminder.cookie);
-        }
-     }*/
     AppComponent.prototype.loadReminders = function () {
         var _this = this;
         this.dataService.getReminders()
             .subscribe(function (data) { return _this.reminders = data; });
-    };
-    AppComponent.prototype.save = function () {
-        var _this = this;
-        if (this.reminder.idReminder == null) {
-            this.dataService.createReminder(this.reminder)
-                .subscribe(function (data) { return _this.reminders.push(data); });
-        }
-        else {
-            this.dataService.updateReminder(this.reminder)
-                .subscribe(function (data) { return _this.loadReminders(); });
-        }
-        this.cancel();
-    };
-    AppComponent.prototype.editReminder = function (r) {
-        this.reminder = r;
-    };
-    AppComponent.prototype.cancel = function () {
-        this.reminder = this.newReminder();
     };
     AppComponent.prototype.delete = function (r) {
         var _this = this;
@@ -61,12 +32,14 @@ var AppComponent = /** @class */ (function () {
             .subscribe(function (data) { return _this.loadReminders(); });
     };
     AppComponent.prototype.add = function () {
-        this.cancel();
-        this.save();
+        var _this = this;
+        this.reminder = this.newReminder();
+        this.dataService.createReminder(this.reminder)
+            .subscribe(function (data) { return _this.reminders.push(data); });
     };
     AppComponent.prototype.newReminder = function () {
-        var timeToWork = this.date['year'] + "/" + this.date['month'] + "/" + this.date['day'] + " "
-            + this.time['hour'] + ":" + this.time['hour'];
+        var timeToWork = this.date['day'] + "/" + this.date['month'] + "/" + this.date['year'] + " "
+            + this.time['hour'] + ":" + this.time['minute'];
         return new Reminder(this.body, timeToWork);
     };
     AppComponent = __decorate([

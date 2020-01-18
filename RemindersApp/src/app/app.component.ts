@@ -2,7 +2,6 @@
 import { strict } from 'assert';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CookieService } from "ngx-cookie-service";
-
 import { DataService } from './data.service';
 import { Reminder } from './models/reminder';
 
@@ -22,48 +21,16 @@ export class AppComponent implements OnInit {
     body: string;
     cookie: string;
     
-
     constructor(private dataService: DataService, private cookieService: CookieService) {
     }
   
     ngOnInit() {
-        //this.identifyUser();
         this.loadReminders();
     }
-
-   /* identifyUser() {
-       if (this.cookieService.check("RemindersApp")) {
-            this.cookie = this.cookieService.get("RemindersApp");
-       }
-       else
-       { 
-           this.cookie = this.newCookieValue();
-           this.cookieService.set("RemindersApp", this.reminder.cookie);
-       }
-    }*/
 
     loadReminders() {
         this.dataService.getReminders()
             .subscribe((data: Reminder[]) => this.reminders = data);
-    }
-
-    save() {
-        if (this.reminder.idReminder == null) {
-            this.dataService.createReminder(this.reminder)
-                .subscribe((data: Reminder) => this.reminders.push(data));
-        } else {
-            this.dataService.updateReminder(this.reminder)
-                .subscribe(data => this.loadReminders());
-        }
-        this.cancel();
-    }
-
-    editReminder(r: Reminder) {
-        this.reminder = r;
-    }
-
-    cancel() {
-        this.reminder = this.newReminder();
     }
 
     delete(r: Reminder) {
@@ -72,14 +39,14 @@ export class AppComponent implements OnInit {
     }
 
     add() {
-        this.cancel();
-        this.save();
+        this.reminder = this.newReminder();
+        this.dataService.createReminder(this.reminder)
+            .subscribe((data: Reminder) => this.reminders.push(data));
     }
 
     newReminder(): Reminder {
-        var timeToWork = this.date['year'] + "/" + this.date['month'] + "/" + this.date['day'] + " "
-            + this.time['hour'] + ":" + this.time['hour'];
+        var timeToWork = this.date['day'] + "/" + this.date['month'] + "/" + this.date['year'] + " "
+            + this.time['hour'] + ":" + this.time['minute'];
         return new Reminder(this.body, timeToWork);
-    }
-    
+    } 
 }

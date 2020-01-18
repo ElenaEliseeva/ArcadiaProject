@@ -16,12 +16,7 @@ export class DataService {
     }
 
     createReminder(reminder: Reminder) : Observable<any> {
-        return this.http.post(this.url, reminder, { responseType: 'text'});
-    }
-
-    updateReminder(reminder: Reminder) : Observable<any> {
-
-        return this.http.put(this.url + '/' + reminder.idReminder, reminder, { responseType: 'text' });
+        return this.http.post(this.url, reminder);
     }
 
     deleteReminder(idReminder: number): Observable<any> {

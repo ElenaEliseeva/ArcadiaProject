@@ -56,23 +56,6 @@ namespace RemindersApp.Controllers
             return Ok(reminder);
         }
 
-        // PUT: api/Reminders
-        [HttpPut]
-        public async Task<ActionResult<Reminders>> Put(Reminders reminder)
-        {
-            if (reminder == null)
-            {
-                return BadRequest();
-            }
-            if (!ctx.Reminders.Any(x => x.IdReminder == reminder.IdReminder))
-            {
-                return NotFound();
-            }
-            ctx.Update(reminder);
-            await ctx.SaveChangesAsync();
-            return Ok(reminder);
-        }
-
         // DELETE: api/Reminder/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Reminders>> Delete(int id)

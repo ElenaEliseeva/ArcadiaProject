@@ -40,13 +40,14 @@
                 <tr>
                     <th>Напоминание</th>
                     <th>Время напоминания</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let reminder of reminders">
                     <td>{{reminder?.body}}</td>
                     <td>{{reminder?.timeToWork}}</td>
-                    <td><button class="btn btn-outline-primary" (click)="delete(reminder)">Удалить</button></td>
+                    <td><button class="btn btn-sm btn-danger" (click)="delete(reminder)">Удалить</button></td>                  
                 </tr>
             </tbody>
         </table>

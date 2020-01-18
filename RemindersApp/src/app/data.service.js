@@ -18,10 +18,7 @@ var DataService = /** @class */ (function () {
         return this.http.get(this.url);
     };
     DataService.prototype.createReminder = function (reminder) {
-        return this.http.post(this.url, reminder, { responseType: 'text' });
-    };
-    DataService.prototype.updateReminder = function (reminder) {
-        return this.http.put(this.url + '/' + reminder.idReminder, reminder, { responseType: 'text' });
+        return this.http.post(this.url, reminder);
     };
     DataService.prototype.deleteReminder = function (idReminder) {
         return this.http.delete(this.url + '/' + idReminder);
