@@ -67,7 +67,7 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.newReminder = function () {
         var timeToWork = this.date['year'] + "/" + this.date['month'] + "/" + this.date['day'] + " "
             + this.time['hour'] + ":" + this.time['hour'];
-        return new Reminder(this.body, timeToWork, this.cookie);
+        return new Reminder(this.body, timeToWork);
     };
     AppComponent = __decorate([
         Component({

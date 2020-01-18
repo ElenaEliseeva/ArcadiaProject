@@ -1,9 +1,8 @@
 var Reminder = /** @class */ (function () {
-    function Reminder(body, timeToWork, cookie, idReminder) {
+    function Reminder(body, timeToWork, idReminder) {
         this.idReminder = idReminder;
         this.body = body;
         this.timeToWork = timeToWork;
-        this.cookie = cookie;
     }
     return Reminder;
 }());

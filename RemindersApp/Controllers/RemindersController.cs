@@ -24,12 +24,11 @@ namespace RemindersApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reminders>>> Get()
         {
-            string cookie;
             if (Request.Cookies["RemindrsApp"] == null)
             {
-                Response.Cookies.Append("RemindrsApp", createCookie(8));
+                Response.Cookies.Append("RemindrsApp", СreateCookie(8));
             }
-            cookie = Request.Cookies["RemindrsApp"];
+            string cookie = Request.Cookies["RemindrsApp"];
             return await ctx.Reminders.Where(s => s.Cookie.Contains(cookie)).ToListAsync();
         }
 
@@ -89,16 +88,15 @@ namespace RemindersApp.Controllers
             return Ok(reminder);
         }
 
-        public string createCookie(int length)
+        public string СreateCookie(int length)
         {
             Random rnd = new Random();
             String alphabet  = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             string cookie = "";
-            int position;
 
             for (int i = 0; i < length; i++)
             {
-                position = rnd.Next(0, alphabet.Length - 1);
+                int position = rnd.Next(0, alphabet.Length - 1);
                 cookie += alphabet[position];
             }
 

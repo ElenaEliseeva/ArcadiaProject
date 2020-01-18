@@ -38,20 +38,15 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Напоминание</th>
-                    <th>Напомнить в ...</th>
-                    <th>Приоритет</th>
-                    <th>Куки пользователя</th>
+                    <th>Время напоминания</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let reminder of reminders">
-                    <td>{{reminder?.idReminder}}</td>
                     <td>{{reminder?.body}}</td>
                     <td>{{reminder?.timeToWork}}</td>
-                    <td>{{reminder?.idPriority}}</td>
-                    <td>{{reminder?.idCookie}}</td>
+                    <td><button class="btn btn-outline-primary" (click)="delete(reminder)">Удалить</button></td>
                 </tr>
             </tbody>
         </table>
