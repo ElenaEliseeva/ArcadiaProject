@@ -7,19 +7,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CookieService } from "ngx-cookie-service";
+import { PushNotificationsService } from "ng-push";
 import { DataService } from './data.service';
 import { Reminder } from './models/reminder';
 var AppComponent = /** @class */ (function () {
-    function AppComponent(dataService, cookieService) {
+    function AppComponent(dataService, cookieService, pushNotificationsService, cd) {
+        var _this = this;
         this.dataService = dataService;
         this.cookieService = cookieService;
+        this.pushNotificationsService = pushNotificationsService;
         this.date = { year: 2020, month: 1, day: 30 };
         this.time = { hour: 13, minute: 30 };
+        setInterval(function () { _this.checkNotification(); }, 1000);
     }
     AppComponent.prototype.ngOnInit = function () {
         this.loadReminders();
+    };
+    AppComponent.prototype.requestPermission = function () {
+        this.pushNotificationsService.requestPermission();
+    };
+    AppComponent.prototype.pushNotification = function () {
+        this.pushNotificationsService.create('Example One', { body: 'Just an example' })
+            .subscribe(function (res) { return console.log(res); }, function (err) { return console.log(err); });
+    };
+    AppComponent.prototype.checkNotification = function () {
+        var timeNow = new Date();
     };
     AppComponent.prototype.loadReminders = function () {
         var _this = this;
@@ -48,7 +62,8 @@ var AppComponent = /** @class */ (function () {
             templateUrl: './app.component.html',
             providers: [DataService]
         }),
-        __metadata("design:paramtypes", [DataService, CookieService])
+        __metadata("design:paramtypes", [DataService, CookieService,
+            PushNotificationsService, ChangeDetectorRef])
     ], AppComponent);
     return AppComponent;
 }());

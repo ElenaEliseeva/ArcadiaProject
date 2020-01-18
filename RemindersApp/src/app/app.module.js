@@ -12,12 +12,14 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from "ngx-cookie-service";
+import { PushNotificationsModule } from "ng-push";
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         NgModule({
-            imports: [BrowserModule, FormsModule, NgbModule, ReactiveFormsModule, HttpClientModule],
+            imports: [BrowserModule, FormsModule, NgbModule,
+                ReactiveFormsModule, HttpClientModule, PushNotificationsModule],
             declarations: [AppComponent],
             bootstrap: [AppComponent],
             providers: [CookieService]

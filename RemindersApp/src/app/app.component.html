@@ -1,55 +1,52 @@
 ﻿<div class="container">
 
+    <div class="row justify-content-center my-3">
+        <div class="col  mx-sm-1 mb-2">
+            <button class="btn btn-outline-secondary" (click)="requestPermission()">Включить уведомления</button>
+        </div>
+    </div>
+
+    <form>
+        <div class="row align-items-center my-3">
+
+            <div class="col-5 mx-sm-1 mb-2">
+                <div class="input-group ">
+                    <input class="form-control" placeholder="Текст заметки" [(ngModel)]="body" name="body" />
+                </div>
+            </div>
+
+            <div class="col mx-sm-1 mb-2">
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                           name="date" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col mx-sm-1 mb-2">
+                <ngb-timepicker [(ngModel)]="time" name="time" [spinners]="false"></ngb-timepicker>
+            </div>
+
+            <div class="col mx-sm-1 mb-2">
+                <button class="btn btn-outline-primary btn-block" (click)="add()">Добавить</button>
+            </div>
+
+        </div>
+    </form>
     <div class="row align-items-center my-3">
-
-        <div class="col-md-auto">
-            <form class="form-inline">
-
-                <div class="form-group mx-sm-3 mb-2">
-                    <div class="input-group ">
-                        <input class="form-control" [(ngModel)]="body"  name="body"/>
-                    </div>
-                </div>
-
-                <div class="form-group mx-sm-3 mb-2">
-                    <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd" 
-                               name="date" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                        </div>
-                    </div>
-                </div>
-
-            </form>
+        <div class="col">
+            <table class="table table-borderless table-hover">
+                <tbody>
+                    <tr *ngFor="let reminder of reminders">
+                        <td colspan="5">{{reminder?.body}}</td>
+                        <td colspan="2">{{reminder?.timeToWork}}</td>
+                        <td><button class="btn btn-sm btn-outline-danger btn-block" (click)="delete(reminder)">Удалить</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-        <div class="col mx-sm-3 mb-2">
-            <ngb-timepicker [(ngModel)]="time" name = "time" [spinners]="false"></ngb-timepicker>
-        </div>
-
-        <div class="col mx-sm-3 mb-2">
-            <button class="btn btn-outline-primary" (click)="add()">Добавить</button>
-        </div>
-
     </div>
 
-    <div class="row">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Напоминание</th>
-                    <th>Время напоминания</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let reminder of reminders">
-                    <td>{{reminder?.body}}</td>
-                    <td>{{reminder?.timeToWork}}</td>
-                    <td><button class="btn btn-sm btn-danger" (click)="delete(reminder)">Удалить</button></td>                  
-                </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
