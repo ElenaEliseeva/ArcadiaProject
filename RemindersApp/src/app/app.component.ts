@@ -36,27 +36,26 @@ export class AppComponent implements OnInit {
         this.pushNotificationsService.requestPermission();      
     }
 
-    pushNotification() {
-        
+    checkNotification() {
+        var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
+        var timeNow = new Date().toLocaleString('ko-KR', options);
+        console.log(timeNow);
+        this.reminders.forEach(reminder => {    
+            if (reminder.timeToWork == timeNow) {
+                this.pushNotification(reminder.body);
+            }
+        })
+    }
+
+    pushNotification(body : string) {
         this.pushNotificationsService.create(
-            'Example One',
-            { body: 'Just an example' }
+            body,
+            { body: 'Reminders App' }
         )
             .subscribe(
                 (res: any) => console.log(res),
                 (err: any) => console.log(err)
-        )
-    }
-
-    checkNotification() {
-        var timeNow: Date = new Date();
-        var timeNowStr: string = timeNow.toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2').substring(0, 17);
-        this.reminders.forEach(reminder => {
-            if (reminder.timeToWork == timeNowStr) {
-                this.pushNotification();
-            }
-        })
-
+            )
     }
 
     loadReminders() {
@@ -79,9 +78,10 @@ export class AppComponent implements OnInit {
     }
 
     newReminder(): Reminder {
-        var timeToWork = this.zero(this.date['day']) + this.date['day'] + "."
-            + this.zero(this.date['month']) + this.date['month'] + "."
-            + this.date['year'] + ", "
+        var timeToWork =
+            this.date['year'] + ". "
+            + this.zero(this.date['month']) + this.date['month'] + ". "
+            + this.zero(this.date['day']) + this.date['day'] + ". "          
             + this.zero(this.date['hour']) + this.time['hour'] + ":"
             + this.zero(this.date['minute']) + this.time['minute'];
 

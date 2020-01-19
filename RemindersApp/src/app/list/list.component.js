@@ -15,6 +15,17 @@ var ListComponent = /** @class */ (function () {
     ListComponent.prototype.deleteReminder = function (reminder) {
         this.delete.emit(reminder);
     };
+    ListComponent.prototype.done = function (reminder) {
+        var timeNow = Date().toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2').substring(0, 17);
+        if (reminder.timeToWork > timeNow) {
+            console.log(reminder.timeToWork + ">" + timeNow);
+            return false;
+        }
+        else {
+            console.log(reminder.timeToWork + "<=" + timeNow);
+            return true;
+        }
+    };
     __decorate([
         Input(),
         __metadata("design:type", Array)

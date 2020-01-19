@@ -28,19 +28,19 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.requestPermission = function () {
         this.pushNotificationsService.requestPermission();
     };
-    AppComponent.prototype.pushNotification = function () {
-        this.pushNotificationsService.create('Example One', { body: 'Just an example' })
-            .subscribe(function (res) { return console.log(res); }, function (err) { return console.log(err); });
-    };
     AppComponent.prototype.checkNotification = function () {
         var _this = this;
-        var timeNow = new Date();
-        var timeNowStr = timeNow.toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2').substring(0, 17);
+        var timeNow = Date().toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2').substring(0, 17);
         this.reminders.forEach(function (reminder) {
-            if (reminder.timeToWork == timeNowStr) {
-                _this.pushNotification();
+            console.log(reminder.timeToWork + "==" + timeNow);
+            if (reminder.timeToWork == timeNow) {
+                _this.pushNotification(reminder.body);
             }
         });
+    };
+    AppComponent.prototype.pushNotification = function (body) {
+        this.pushNotificationsService.create(body, { body: 'Reminders App' })
+            .subscribe(function (res) { return console.log(res); }, function (err) { return console.log(err); });
     };
     AppComponent.prototype.loadReminders = function () {
         var _this = this;
