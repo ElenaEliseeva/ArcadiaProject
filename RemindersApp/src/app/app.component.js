@@ -52,7 +52,7 @@ var AppComponent = /** @class */ (function () {
             .subscribe(function (data) { return _this.reminders.push(data); });
     };
     AppComponent.prototype.newReminder = function () {
-        var timeToWork = this.date['day'] + "/" + this.date['month'] + "/" + this.date['year'] + " "
+        var timeToWork = this.date['day'] + "/" + this.date['month'] + "/" + this.date['year'] + ", "
             + this.time['hour'] + ":" + this.time['minute'];
         return new Reminder(this.body, timeToWork);
     };

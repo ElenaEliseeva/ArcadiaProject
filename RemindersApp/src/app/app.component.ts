@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
 
     requestPermission() {
         this.pushNotificationsService.requestPermission();
+        
     }
 
     pushNotification() {
@@ -50,6 +51,8 @@ export class AppComponent implements OnInit {
 
     checkNotification() {
         var timeNow: Date = new Date();
+        
+
     }
 
     loadReminders() {
@@ -69,7 +72,7 @@ export class AppComponent implements OnInit {
     }
 
     newReminder(): Reminder {
-        var timeToWork = this.date['day'] + "/" + this.date['month'] + "/" + this.date['year'] + " "
+        var timeToWork = this.date['day'] + "/" + this.date['month'] + "/" + this.date['year'] + ", "
             + this.time['hour'] + ":" + this.time['minute'];
         return new Reminder(this.body, timeToWork);
     } 
