@@ -29,17 +29,7 @@ namespace RemindersApp.Controllers
                 Response.Cookies.Append("RemindrsApp", СreateCookie(8));
             }
             string cookie = Request.Cookies["RemindrsApp"];
-            return await ctx.Reminders.Where(s => s.Cookie.Contains(cookie)).ToListAsync();
-        }
-
-        // GET: api/Reminders/5
-        [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<Reminders>> Get(int id)
-        {
-            Reminders reminder = await ctx.Reminders.FirstOrDefaultAsync(x => x.IdReminder == id);
-            if (reminder == null)
-                return NotFound();
-            return new ObjectResult(reminder);
+            return await ctx.Reminders.Where(s => s.Cookie.Contains(cookie)).OrderByDescending(s => s.TimeToWork).ToListAsync();
         }
 
         // POST: api/Reminders

@@ -33,8 +33,14 @@ var AppComponent = /** @class */ (function () {
             .subscribe(function (res) { return console.log(res); }, function (err) { return console.log(err); });
     };
     AppComponent.prototype.checkNotification = function () {
+        var _this = this;
         var timeNow = new Date();
-        console.log(timeNow.toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2'));
+        var timeNowStr = timeNow.toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2').substring(0, 17);
+        this.reminders.forEach(function (reminder) {
+            if (reminder.timeToWork == timeNowStr) {
+                _this.pushNotification();
+            }
+        });
     };
     AppComponent.prototype.loadReminders = function () {
         var _this = this;
@@ -48,14 +54,29 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.add = function () {
         var _this = this;
+        if (this.body.trim().length === 0) {
+            return;
+        }
         this.reminder = this.newReminder();
         this.dataService.createReminder(this.reminder)
             .subscribe(function (data) { return _this.reminders.push(data); });
     };
     AppComponent.prototype.newReminder = function () {
-        var timeToWork = this.date['day'] + "/" + this.date['month'] + "/" + this.date['year'] + ", "
-            + this.time['hour'] + ":" + this.time['minute'];
+        var timeToWork = this.zero(this.date['day']) + this.date['day'] + "."
+            + this.zero(this.date['month']) + this.date['month'] + "."
+            + this.date['year'] + ", "
+            + this.zero(this.date['hour']) + this.time['hour'] + ":"
+            + this.zero(this.date['minute']) + this.time['minute'];
         return new Reminder(this.body, timeToWork);
+    };
+    AppComponent.prototype.zero = function (num) {
+        if (num <= 9) {
+            return "0";
+        }
+        else {
+            return "";
+        }
+        ;
     };
     AppComponent = __decorate([
         Component({
