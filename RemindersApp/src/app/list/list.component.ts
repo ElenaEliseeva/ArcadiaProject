@@ -1,4 +1,4 @@
-﻿import { Component, Input, EventEmitter, Output } from '@angular/core';
+﻿import { Component, Input, EventEmitter, Output} from '@angular/core';
 
 import { Reminder } from '../models/reminder';
 
@@ -6,7 +6,7 @@ import { Reminder } from '../models/reminder';
     selector: 'list-reminders',
     templateUrl: './list.component.html',
 })
-export class ListComponent {
+export class ListComponent{
     @Input() reminders: Reminder[];
     @Output() delete = new EventEmitter<Reminder>();
     deleteReminder(reminder: Reminder) {

@@ -7,21 +7,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input } from '@angular/core';
-var ChildComponent = /** @class */ (function () {
-    function ChildComponent() {
+import { Component, Input, EventEmitter, Output } from '@angular/core';
+var ListComponent = /** @class */ (function () {
+    function ListComponent() {
+        this.delete = new EventEmitter();
     }
+    ListComponent.prototype.deleteReminder = function (reminder) {
+        this.delete.emit(reminder);
+    };
     __decorate([
         Input(),
         __metadata("design:type", Array)
-    ], ChildComponent.prototype, "reminders", void 0);
-    ChildComponent = __decorate([
+    ], ListComponent.prototype, "reminders", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], ListComponent.prototype, "delete", void 0);
+    ListComponent = __decorate([
         Component({
             selector: 'list-reminders',
             templateUrl: './list.component.html',
         })
-    ], ChildComponent);
-    return ChildComponent;
+    ], ListComponent);
+    return ListComponent;
 }());
-export { ChildComponent };
+export { ListComponent };
 //# sourceMappingURL=list.component.js.map

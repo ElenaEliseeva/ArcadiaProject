@@ -20,7 +20,7 @@ var AppComponent = /** @class */ (function () {
         this.pushNotificationsService = pushNotificationsService;
         this.date = { year: 2020, month: 1, day: 30 };
         this.time = { hour: 13, minute: 30 };
-        setInterval(function () { _this.checkNotification(); }, 1000);
+        setInterval(function () { _this.checkNotification(); }, 60000);
     }
     AppComponent.prototype.ngOnInit = function () {
         this.loadReminders();
@@ -34,6 +34,7 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.checkNotification = function () {
         var timeNow = new Date();
+        console.log(timeNow.toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2'));
     };
     AppComponent.prototype.loadReminders = function () {
         var _this = this;
@@ -58,7 +59,7 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent = __decorate([
         Component({
-            selector: 'purchase-app',
+            selector: 'reminders-app',
             templateUrl: './app.component.html',
             providers: [DataService]
         }),

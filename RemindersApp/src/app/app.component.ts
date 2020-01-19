@@ -10,7 +10,7 @@ import { Reminder } from './models/reminder';
 
 
 @Component({
-    selector: 'purchase-app',
+    selector: 'reminders-app',
     templateUrl: './app.component.html',
     providers: [DataService]
 })
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     
     constructor(private dataService: DataService, private cookieService: CookieService,
         private pushNotificationsService: PushNotificationsService, cd: ChangeDetectorRef) {
-        setInterval(() => { this.checkNotification(); }, 1000);
+        setInterval(() => { this.checkNotification(); }, 60000);
     }
   
     ngOnInit() {
@@ -33,8 +33,7 @@ export class AppComponent implements OnInit {
     }
 
     requestPermission() {
-        this.pushNotificationsService.requestPermission();
-        
+        this.pushNotificationsService.requestPermission();      
     }
 
     pushNotification() {
@@ -51,7 +50,12 @@ export class AppComponent implements OnInit {
 
     checkNotification() {
         var timeNow: Date = new Date();
-        
+        var timeNowStr: string = timeNow.toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2').substring(0, 17);
+        this.reminders.forEach(reminder => {
+            if (reminder.timeToWork == timeNowStr) {
+                this.pushNotification();
+            }
+        })
 
     }
 
@@ -66,14 +70,29 @@ export class AppComponent implements OnInit {
     }
 
     add() {
+        if (this.body.trim().length === 0) {
+            return;
+        }
         this.reminder = this.newReminder();
         this.dataService.createReminder(this.reminder)
             .subscribe((data: Reminder) => this.reminders.push(data));
     }
 
     newReminder(): Reminder {
-        var timeToWork = this.date['day'] + "/" + this.date['month'] + "/" + this.date['year'] + ", "
-            + this.time['hour'] + ":" + this.time['minute'];
+        var timeToWork = this.zero(this.date['day']) + this.date['day'] + "."
+            + this.zero(this.date['month']) + this.date['month'] + "."
+            + this.date['year'] + ", "
+            + this.zero(this.date['hour']) + this.time['hour'] + ":"
+            + this.zero(this.date['minute']) + this.time['minute'];
+
         return new Reminder(this.body, timeToWork);
     } 
+
+    zero(num: number):string {
+        if (num <= 9) {
+            return "0";
+        } else {
+            return ""
+        };
+    }
 }
