@@ -7,19 +7,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CookieService } from "ngx-cookie-service";
+import { PushNotificationsService } from "ng-push";
 import { DataService } from './data.service';
 import { Reminder } from './models/reminder';
 var AppComponent = /** @class */ (function () {
-    function AppComponent(dataService, cookieService) {
+    function AppComponent(dataService, cookieService, pushNotificationsService, cd) {
+        var _this = this;
         this.dataService = dataService;
         this.cookieService = cookieService;
+        this.pushNotificationsService = pushNotificationsService;
         this.date = { year: 2020, month: 1, day: 30 };
         this.time = { hour: 13, minute: 30 };
+        setInterval(function () { _this.checkNotification(); }, 60000);
     }
     AppComponent.prototype.ngOnInit = function () {
         this.loadReminders();
+    };
+    AppComponent.prototype.requestPermission = function () {
+        this.pushNotificationsService.requestPermission();
+    };
+    AppComponent.prototype.checkNotification = function () {
+        var _this = this;
+        var timeNow = Date().toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2').substring(0, 17);
+        this.reminders.forEach(function (reminder) {
+            console.log(reminder.timeToWork + "==" + timeNow);
+            if (reminder.timeToWork == timeNow) {
+                _this.pushNotification(reminder.body);
+            }
+        });
+    };
+    AppComponent.prototype.pushNotification = function (body) {
+        this.pushNotificationsService.create(body, { body: 'Reminders App' })
+            .subscribe(function (res) { return console.log(res); }, function (err) { return console.log(err); });
     };
     AppComponent.prototype.loadReminders = function () {
         var _this = this;
@@ -33,22 +54,38 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.add = function () {
         var _this = this;
+        if (this.body.trim().length === 0) {
+            return;
+        }
         this.reminder = this.newReminder();
         this.dataService.createReminder(this.reminder)
             .subscribe(function (data) { return _this.reminders.push(data); });
     };
     AppComponent.prototype.newReminder = function () {
-        var timeToWork = this.date['day'] + "/" + this.date['month'] + "/" + this.date['year'] + " "
-            + this.time['hour'] + ":" + this.time['minute'];
+        var timeToWork = this.zero(this.date['day']) + this.date['day'] + "."
+            + this.zero(this.date['month']) + this.date['month'] + "."
+            + this.date['year'] + ", "
+            + this.zero(this.date['hour']) + this.time['hour'] + ":"
+            + this.zero(this.date['minute']) + this.time['minute'];
         return new Reminder(this.body, timeToWork);
+    };
+    AppComponent.prototype.zero = function (num) {
+        if (num <= 9) {
+            return "0";
+        }
+        else {
+            return "";
+        }
+        ;
     };
     AppComponent = __decorate([
         Component({
-            selector: 'purchase-app',
+            selector: 'reminders-app',
             templateUrl: './app.component.html',
             providers: [DataService]
         }),
-        __metadata("design:paramtypes", [DataService, CookieService])
+        __metadata("design:paramtypes", [DataService, CookieService,
+            PushNotificationsService, ChangeDetectorRef])
     ], AppComponent);
     return AppComponent;
 }());

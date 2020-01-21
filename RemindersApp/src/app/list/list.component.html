@@ -1,0 +1,19 @@
+﻿<div class="row align-items-center my-3">
+    <div class="col">
+        <table class="table table-borderless table-sm table-hover">
+            <!--table-borderless bordered-->
+            <tbody>
+                <tr *ngFor="let reminder of reminders">
+                    <td class="text-left" [class.text-black-50]="done(reminder)">
+                        {{reminder?.body}}, {{reminder?.timeToWork}}
+                    </td>
+                    <td class="text-right">
+                        <button class="btn btn-sm btn-outline-danger" (click)="deleteReminder(reminder)">
+                            Удалить
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
