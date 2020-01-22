@@ -30,9 +30,10 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.checkNotification = function () {
         var _this = this;
-        var timeNow = Date().toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2').substring(0, 17);
+        var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
+        var timeNow = new Date().toLocaleString('ko-KR', options);
+        console.log(timeNow);
         this.reminders.forEach(function (reminder) {
-            console.log(reminder.timeToWork + "==" + timeNow);
             if (reminder.timeToWork == timeNow) {
                 _this.pushNotification(reminder.body);
             }
@@ -62,9 +63,9 @@ var AppComponent = /** @class */ (function () {
             .subscribe(function (data) { return _this.reminders.push(data); });
     };
     AppComponent.prototype.newReminder = function () {
-        var timeToWork = this.zero(this.date['day']) + this.date['day'] + "."
-            + this.zero(this.date['month']) + this.date['month'] + "."
-            + this.date['year'] + ", "
+        var timeToWork = this.date['year'] + ". "
+            + this.zero(this.date['month']) + this.date['month'] + ". "
+            + this.zero(this.date['day']) + this.date['day'] + ". "
             + this.zero(this.date['hour']) + this.time['hour'] + ":"
             + this.zero(this.date['minute']) + this.time['minute'];
         return new Reminder(this.body, timeToWork);

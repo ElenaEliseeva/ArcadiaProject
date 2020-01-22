@@ -16,13 +16,12 @@ var ListComponent = /** @class */ (function () {
         this.delete.emit(reminder);
     };
     ListComponent.prototype.done = function (reminder) {
-        var timeNow = Date().toLocaleString().replace(/([^T]+)T([^.]+).*/g, '$1 $2').substring(0, 17);
+        var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
+        var timeNow = new Date().toLocaleString('ko-KR', options);
         if (reminder.timeToWork > timeNow) {
-            console.log(reminder.timeToWork + ">" + timeNow);
             return false;
         }
         else {
-            console.log(reminder.timeToWork + "<=" + timeNow);
             return true;
         }
     };

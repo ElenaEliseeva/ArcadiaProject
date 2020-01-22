@@ -1,6 +1,5 @@
 ﻿import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { strict } from 'assert';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CookieService } from "ngx-cookie-service";
 import { PushNotificationsService } from "ng-push";
 

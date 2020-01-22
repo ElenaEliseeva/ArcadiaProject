@@ -21,7 +21,6 @@ export class ListComponent{
 
             return false;
         } else {
-
             return true;
         }
     }

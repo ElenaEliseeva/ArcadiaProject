@@ -1,4 +1,11 @@
 ﻿<div class="row align-items-center my-3">
+    <div class="col mx-sm-1 mb-2">
+        <div class="jumbotron jumbotron-fluid" *ngIf="reminders?.length == 0">
+            <p class="lead text-center">Нет напоминаний. Добавьте новое, чтобы начать.</p>
+        </div>
+    </div>
+</div>
+<div class="row align-items-center my-3">
     <div class="col">
         <table class="table table-borderless table-sm table-hover">
             <!--table-borderless bordered-->
