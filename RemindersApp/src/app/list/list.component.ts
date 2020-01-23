@@ -1,5 +1,4 @@
 ﻿import { Component, Input, EventEmitter, Output} from '@angular/core';
-
 import { Reminder } from '../models/reminder';
 
 @Component({

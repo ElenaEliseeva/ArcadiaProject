@@ -3,7 +3,7 @@ import { strict } from 'assert';
 import { CookieService } from "ngx-cookie-service";
 import { PushNotificationsService } from "ng-push";
 
-import { DataService } from './data.service';
+import { DataService } from './data/data.service';
 import { Reminder } from './models/reminder';
 
 
@@ -50,11 +50,7 @@ export class AppComponent implements OnInit {
         this.pushNotificationsService.create(
             body,
             { body: 'Reminders App' }
-        )
-            .subscribe(
-                (res: any) => console.log(res),
-                (err: any) => console.log(err)
-            )
+        ) .subscribe()
     }
 
     loadReminders() {

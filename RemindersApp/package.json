@@ -4,7 +4,7 @@
   "description": "Test task from Arcadia",
   "author": "Eliseeva Elena",
   "scripts": {
-    "dev": "webpack-dev-server --hot --open",
+    "dev": "webpack-dev-server --open",
     "build": "webpack"
   },
   "dependencies": {

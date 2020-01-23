@@ -38,8 +38,11 @@ module.exports = {
    plugins: [
     new webpack.ContextReplacementPlugin(
         /angular(\\|\/)core/,
-        path.resolve(__dirname, 'src'), // каталог с исходными файлами
-      {} // карта маршрутов
-    )
-  ]
+        path.resolve(__dirname, 'src'), 
+      {})
+    ],
+    devServer: {  
+        contentBase: './wwwroot',  
+        port: 7000
+    } 
 }
