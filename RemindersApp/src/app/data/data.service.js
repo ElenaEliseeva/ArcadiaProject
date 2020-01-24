@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 var DataService = /** @class */ (function () {
     function DataService(http) {
         this.http = http;
-        this.url = "/api/Reminders";
+        this.url = "http://localhost:5000/api/Reminders";
     }
     DataService.prototype.getReminders = function () {
         return this.http.get(this.url);

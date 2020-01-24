@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace RemindersApp.Controllers
         }
 
         // GET: api/Reminders
+        [EnableCors("CORS")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reminders>>> Get()
         {
@@ -33,6 +35,7 @@ namespace RemindersApp.Controllers
         }
 
         // POST: api/Reminders
+        [EnableCors("CORS")]
         [HttpPost]
         public async Task<ActionResult<Reminders>> Post([FromBody] Reminders reminder)
         {
@@ -47,6 +50,7 @@ namespace RemindersApp.Controllers
         }
 
         // DELETE: api/Reminder/5
+        [EnableCors("CORS")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Reminders>> Delete(int id)
         {

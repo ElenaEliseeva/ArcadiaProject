@@ -32,7 +32,6 @@ var AppComponent = /** @class */ (function () {
         if (date.getSeconds() == 0) {
             var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
             var timeNow = new Date().toLocaleString('ko-KR', options);
-            console.log("now " + timeNow);
             this.reminders.forEach(function (reminder) {
                 if (reminder.timeToWork == timeNow) {
                     _this.pushNotification(reminder.body);

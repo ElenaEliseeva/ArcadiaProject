@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
         if (date.getSeconds() == 0) {
             var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
             var timeNow = new Date().toLocaleString('ko-KR', options);
-            console.log("now " + timeNow);
             this.reminders.forEach(reminder => {
                 if (reminder.timeToWork == timeNow) {
                     this.pushNotification(reminder.body);

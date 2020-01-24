@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class DataService {
 
-    private url = "/api/Reminders";
+    private url = "http://localhost:5000/api/Reminders";
 
     constructor(private http: HttpClient) {
     }
@@ -14,7 +14,7 @@ export class DataService {
     getReminders(): Observable<any> {
         return this.http.get(this.url);
     }
-
+    
     createReminder(reminder: Reminder) : Observable<any> {
         return this.http.post(this.url, reminder);
     }

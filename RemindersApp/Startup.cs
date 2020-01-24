@@ -26,32 +26,35 @@ namespace RemindersApp
         {
             services.AddDbContext<RemindersAppDataContext>(o => o.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CORS", 
+                    corsPolicyBuilder => corsPolicyBuilder.WithOrigins("http://localhost:7000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
         }
 
-        [System.Obsolete("Use Microsoft.AspNetCore.SpaServices.Extensions")]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-
-                // добавляем сборку через webpack
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true
-                });
-
-                app.UseRouting();
-
-                app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllers();
-                });
+                app.UseDeveloperExceptionPage();             
             }
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            app.UseRouting();
+
+            app.UseCors("CORS");
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
