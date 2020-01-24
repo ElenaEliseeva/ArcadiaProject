@@ -1,6 +1,4 @@
-﻿import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import { strict } from 'assert';
-import { CookieService } from "ngx-cookie-service";
+﻿import { Component, OnInit} from '@angular/core';
 import { PushNotificationsService } from "ng-push";
 
 import { DataService } from './data/data.service';
@@ -19,12 +17,12 @@ export class AppComponent implements OnInit {
     reminder: Reminder;
     reminders: Reminder[];
     date = { year: 2020, month: 1, day: 30 };
-    time = { hour: 13, minute: 30 };
+    time = { hour: 13, minute: 0 };
     body: string;
     
-    constructor(private dataService: DataService, private cookieService: CookieService,
-        private pushNotificationsService: PushNotificationsService, cd: ChangeDetectorRef) {
-        setInterval(() => { this.checkNotification(); }, 60000);
+    constructor(private dataService: DataService,
+        private pushNotificationsService: PushNotificationsService) {
+        setInterval(() => { this.checkNotification(); }, 1000);
     }
   
     ngOnInit() {
@@ -36,14 +34,17 @@ export class AppComponent implements OnInit {
     }
 
     checkNotification() {
-        var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
-        var timeNow = new Date().toLocaleString('ko-KR', options);
-        console.log(timeNow);
-        this.reminders.forEach(reminder => {    
-            if (reminder.timeToWork == timeNow) {
-                this.pushNotification(reminder.body);
-            }
-        })
+        var date = new Date();
+        if (date.getSeconds() == 0) {
+            var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
+            var timeNow = new Date().toLocaleString('ko-KR', options);
+            console.log("now " + timeNow);
+            this.reminders.forEach(reminder => {
+                if (reminder.timeToWork == timeNow) {
+                    this.pushNotification(reminder.body);
+                }
+            })
+        }
     }
 
     pushNotification(body : string) {
@@ -77,9 +78,8 @@ export class AppComponent implements OnInit {
             this.date['year'] + ". "
             + this.zero(this.date['month']) + this.date['month'] + ". "
             + this.zero(this.date['day']) + this.date['day'] + ". "          
-            + this.zero(this.date['hour']) + this.time['hour'] + ":"
-            + this.zero(this.date['minute']) + this.time['minute'];
-
+            + this.zero(this.time['hour']) + this.time['hour'] + ":"
+            + this.zero(this.time['minute']) + this.time['minute'];
         return new Reminder(this.body, timeToWork);
     } 
 
