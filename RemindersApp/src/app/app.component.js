@@ -18,7 +18,7 @@ var AppComponent = /** @class */ (function () {
         this.pushNotificationsService = pushNotificationsService;
         this.date = { year: 2020, month: 1, day: 30 };
         this.time = { hour: 13, minute: 0 };
-        setInterval(function () { _this.checkNotification(); }, 60000);
+        setInterval(function () { _this.checkNotification(); }, 1000);
     }
     AppComponent.prototype.ngOnInit = function () {
         this.loadReminders();
@@ -28,14 +28,17 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.checkNotification = function () {
         var _this = this;
-        var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
-        var timeNow = new Date().toLocaleString('ko-KR', options);
-        console.log("now " + timeNow);
-        this.reminders.forEach(function (reminder) {
-            if (reminder.timeToWork == timeNow) {
-                _this.pushNotification(reminder.body);
-            }
-        });
+        var date = new Date();
+        if (date.getSeconds() == 0) {
+            var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
+            var timeNow = new Date().toLocaleString('ko-KR', options);
+            console.log("now " + timeNow);
+            this.reminders.forEach(function (reminder) {
+                if (reminder.timeToWork == timeNow) {
+                    _this.pushNotification(reminder.body);
+                }
+            });
+        }
     };
     AppComponent.prototype.pushNotification = function (body) {
         this.pushNotificationsService.create(body, { body: 'Reminders App' }).subscribe();
@@ -63,9 +66,8 @@ var AppComponent = /** @class */ (function () {
         var timeToWork = this.date['year'] + ". "
             + this.zero(this.date['month']) + this.date['month'] + ". "
             + this.zero(this.date['day']) + this.date['day'] + ". "
-            + this.zero(this.date['hour']) + this.time['hour'] + ":"
-            + this.zero(this.date['minute']) + this.time['minute'];
-        console.log(this.date['day'], this.time['hour'], this.date['minute']);
+            + this.zero(this.time['hour']) + this.time['hour'] + ":"
+            + this.zero(this.time['minute']) + this.time['minute'];
         return new Reminder(this.body, timeToWork);
     };
     AppComponent.prototype.zero = function (num) {

@@ -9,6 +9,7 @@ using RemindersApp.Models;
 using System;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 
+
 namespace RemindersApp
 {
     public class Startup
@@ -26,8 +27,6 @@ namespace RemindersApp
             services.AddDbContext<RemindersAppDataContext>(o => o.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 
         [System.Obsolete("Use Microsoft.AspNetCore.SpaServices.Extensions")]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -48,7 +47,7 @@ namespace RemindersApp
                 {
                     endpoints.MapControllers();
                 });
-            } 
+            }
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
