@@ -15,5 +15,5 @@ dotnet run
 ```
 cd RemindersApp/ClientApp
 npm install
-npm start
+npm run dev
 ```
