@@ -9,12 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { PushNotificationsService } from "ng-push";
+import { CookieService } from "ngx-cookie-service";
 import { DataService } from './data/data.service';
 import { Reminder } from './models/reminder';
 var AppComponent = /** @class */ (function () {
-    function AppComponent(dataService, pushNotificationsService) {
+    function AppComponent(dataService, cookieService, pushNotificationsService) {
         var _this = this;
         this.dataService = dataService;
+        this.cookieService = cookieService;
         this.pushNotificationsService = pushNotificationsService;
         this.date = { year: 2020, month: 1, day: 30 };
         this.time = { hour: 13, minute: 0 };
@@ -22,6 +24,9 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         this.loadReminders();
+        if (!this.cookieService.check("RemindrsApp")) {
+            this.cookieService.set("RemindrsApp", this.newCookie(8));
+        }
     };
     AppComponent.prototype.requestPermission = function () {
         this.pushNotificationsService.requestPermission();
@@ -67,7 +72,7 @@ var AppComponent = /** @class */ (function () {
             + this.zero(this.date['day']) + this.date['day'] + ". "
             + this.zero(this.time['hour']) + this.time['hour'] + ":"
             + this.zero(this.time['minute']) + this.time['minute'];
-        return new Reminder(this.body, timeToWork);
+        return new Reminder(this.body, timeToWork, this.cookieService.get("RemindrsApp"));
     };
     AppComponent.prototype.zero = function (num) {
         if (num <= 9) {
@@ -78,13 +83,20 @@ var AppComponent = /** @class */ (function () {
         }
         ;
     };
+    AppComponent.prototype.newCookie = function (length) {
+        var cookie = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < 5; i++)
+            cookie += possible.charAt(Math.floor(Math.random() * possible.length));
+        return cookie;
+    };
     AppComponent = __decorate([
         Component({
             selector: 'reminders-app',
             templateUrl: './app.component.html',
             providers: [DataService]
         }),
-        __metadata("design:paramtypes", [DataService,
+        __metadata("design:paramtypes", [DataService, CookieService,
             PushNotificationsService])
     ], AppComponent);
     return AppComponent;

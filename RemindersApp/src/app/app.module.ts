@@ -10,7 +10,7 @@ import { ListComponent } from "./list/list.component";
 import { AppComponent } from './app.component';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule,
+    imports: [BrowserModule, FormsModule, 
         NgbModule, HttpClientModule, PushNotificationsModule],
     declarations: [AppComponent, ListComponent],
     bootstrap: [AppComponent],

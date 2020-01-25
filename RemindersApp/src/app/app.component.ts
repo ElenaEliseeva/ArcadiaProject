@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit} from '@angular/core';
 import { PushNotificationsService } from "ng-push";
+import { CookieService } from "ngx-cookie-service";
 
 import { DataService } from './data/data.service';
 import { Reminder } from './models/reminder';
@@ -19,13 +20,16 @@ export class AppComponent implements OnInit {
     date = { year: 2020, month: 1, day: 30 };
     time = { hour: 13, minute: 0 };
     body: string;
-    
-    constructor(private dataService: DataService,
+
+    constructor(private dataService: DataService, private cookieService: CookieService,
         private pushNotificationsService: PushNotificationsService) {
         setInterval(() => { this.checkNotification(); }, 1000);
     }
   
     ngOnInit() {
+        if (!this.cookieService.check("RemindrsApp")) {
+            this.cookieService.set("RemindrsApp", this.newCookie(8));
+        } 
         this.loadReminders();
     }
 
@@ -79,14 +83,24 @@ export class AppComponent implements OnInit {
             + this.zero(this.date['day']) + this.date['day'] + ". "          
             + this.zero(this.time['hour']) + this.time['hour'] + ":"
             + this.zero(this.time['minute']) + this.time['minute'];
-        return new Reminder(this.body, timeToWork);
+        return new Reminder(this.body, timeToWork, this.cookieService.get("RemindrsApp"));
     } 
 
     zero(num: number):string {
         if (num <= 9) {
             return "0";
         } else {
-            return ""
+            return "";
         };
+    }
+
+    newCookie(length: number): string {
+        var cookie = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < 5; i++)
+            cookie += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return cookie;
     }
 }

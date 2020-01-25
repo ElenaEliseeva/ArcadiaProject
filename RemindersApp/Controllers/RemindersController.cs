@@ -21,20 +21,13 @@ namespace RemindersApp.Controllers
             this.ctx = ctx;
         }
 
-        // GET: api/Reminders
         [EnableCors("CORS")]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Reminders>>> Get()
+        [HttpGet("{cookie}")]
+        public async Task<ActionResult<IEnumerable<Reminders>>> Get(string cookie)
         {
-            if (Request.Cookies["RemindrsApp"] == null)
-            {
-                Response.Cookies.Append("RemindrsApp", СreateCookie(8));
-            }
-            string cookie = Request.Cookies["RemindrsApp"];
             return await ctx.Reminders.Where(s => s.Cookie.Contains(cookie)).OrderByDescending(s => s.TimeToWork).ToListAsync();
         }
 
-        // POST: api/Reminders
         [EnableCors("CORS")]
         [HttpPost]
         public async Task<ActionResult<Reminders>> Post([FromBody] Reminders reminder)
@@ -43,13 +36,11 @@ namespace RemindersApp.Controllers
             {
                 return BadRequest();
             }
-            reminder.Cookie = Request.Cookies["RemindrsApp"];
             ctx.Reminders.Add(reminder);
             await ctx.SaveChangesAsync();
             return Ok(reminder);
         }
 
-        // DELETE: api/Reminder/5
         [EnableCors("CORS")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Reminders>> Delete(int id)
@@ -63,21 +54,6 @@ namespace RemindersApp.Controllers
 
             await ctx.SaveChangesAsync();
             return Ok(reminder);
-        }
-
-        public string СreateCookie(int length)
-        {
-            Random rnd = new Random();
-            String alphabet  = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            string cookie = "";
-
-            for (int i = 0; i < length; i++)
-            {
-                int position = rnd.Next(0, alphabet.Length - 1);
-                cookie += alphabet[position];
-            }
-
-            return cookie;
         }
     }
 }

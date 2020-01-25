@@ -9,13 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CookieService } from "ngx-cookie-service";
 var DataService = /** @class */ (function () {
-    function DataService(http) {
+    function DataService(http, cookieService) {
         this.http = http;
+        this.cookieService = cookieService;
         this.url = "http://localhost:5000/api/Reminders";
     }
     DataService.prototype.getReminders = function () {
-        return this.http.get(this.url);
+        return this.http.get(this.url + '/' + this.cookieService.get("RemindrsApp"));
     };
     DataService.prototype.createReminder = function (reminder) {
         return this.http.post(this.url, reminder);
@@ -25,7 +27,7 @@ var DataService = /** @class */ (function () {
     };
     DataService = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [HttpClient])
+        __metadata("design:paramtypes", [HttpClient, CookieService])
     ], DataService);
     return DataService;
 }());
