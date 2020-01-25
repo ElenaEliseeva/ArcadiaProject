@@ -23,10 +23,11 @@ var AppComponent = /** @class */ (function () {
         setInterval(function () { _this.checkNotification(); }, 1000);
     }
     AppComponent.prototype.ngOnInit = function () {
-        this.loadReminders();
         if (!this.cookieService.check("RemindrsApp")) {
             this.cookieService.set("RemindrsApp", this.newCookie(8));
         }
+        this.loadReminders();
+        console.log('everything ok');
     };
     AppComponent.prototype.requestPermission = function () {
         this.pushNotificationsService.requestPermission();

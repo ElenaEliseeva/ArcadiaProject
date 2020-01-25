@@ -7,7 +7,7 @@ module.exports = {
         'app': './src/main.ts'
       },
    output:{
-       path: path.resolve(__dirname, './wwwroot/dist'),     
+       path: path.resolve(__dirname, '../wwwroot/dist'),     
        publicPath: '/dist/',
        filename: "[name].js"      
    },
@@ -42,7 +42,7 @@ module.exports = {
       {})
     ],
     devServer: {  
-        contentBase: './wwwroot',  
+        contentBase: '../wwwroot',  
         port: 7000
     } 
 }
