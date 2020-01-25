@@ -17,6 +17,7 @@
     <None Remove="ClientApp\src\app\form\form.component.ts" />
     <None Remove="ClientApp\src\app\list\list.component.ts" />
     <None Remove="ClientApp\src\app\Reminder.ts" />
+    <None Remove="ClientApp\src\app\services\appcookie.service.ts" />
     <None Remove="ClientApp\src\app\services\datetime.service.ts" />
     <None Remove="ClientApp\src\app\services\notification.service.ts" />
     <None Remove="ClientApp\src\main.ts" />

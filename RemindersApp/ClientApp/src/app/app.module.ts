@@ -12,13 +12,14 @@ import { AppComponent } from './app.component';
 import { HttpService } from './services/http.service';
 import { NotificationService } from './services/notification.service'
 import { DateTimeService } from './services/datetime.service';
+import { AppCookieService } from './services/appcookie.service';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, 
         NgbModule, HttpClientModule, PushNotificationsModule],
     declarations: [AppComponent, ListComponent, FormComponent],
     bootstrap: [AppComponent],
-    providers: [CookieService, HttpService, NotificationService, DateTimeService]
+    providers: [CookieService, HttpService, NotificationService, DateTimeService, AppCookieService]
 })
 
 export class AppModule { }

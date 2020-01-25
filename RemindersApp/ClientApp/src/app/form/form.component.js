@@ -7,59 +7,58 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CookieService } from "ngx-cookie-service";
-import { HttpService } from '../services/http.service';
 import { NotificationService } from '../services/notification.service';
+import { DateTimeService } from '../services/datetime.service';
 import { Reminder } from '../models/reminder';
 var FormComponent = /** @class */ (function () {
-    function FormComponent(httpService, cookieService, notificationsService) {
-        this.httpService = httpService;
+    function FormComponent(cookieService, dateTimeService, notificationService) {
         this.cookieService = cookieService;
-        this.notificationsService = notificationsService;
+        this.dateTimeService = dateTimeService;
+        this.notificationService = notificationService;
+        this.add = new EventEmitter();
         this.date = { year: 2020, month: 1, day: 30 };
         this.time = { hour: 13, minute: 0 };
     }
-    FormComponent.prototype.add = function () {
-        var _this = this;
-        if (this.body.trim().length === 0) {
+    FormComponent.prototype.addReminder = function () {
+        if (!this.bodyValid() || !this.dateValid()) {
             return;
         }
         this.reminder = this.newReminder();
-        this.httpService.createReminder(this.reminder)
-            .subscribe(function (data) { return _this.reminders.push(data); });
+        this.add.emit(this.reminder);
     };
-    FormComponent.prototype.newReminder = function () {
-        var timeToWork = this.date['year'] + ". "
-            + this.zero(this.date['month']) + this.date['month'] + ". "
-            + this.zero(this.date['day']) + this.date['day'] + ". "
-            + this.zero(this.time['hour']) + this.time['hour'] + ":"
-            + this.zero(this.time['minute']) + this.time['minute'];
-        return new Reminder(this.body, timeToWork, this.cookieService.get("RemindrsApp"));
-    };
-    FormComponent.prototype.zero = function (num) {
-        if (num <= 9) {
-            return "0";
+    FormComponent.prototype.bodyValid = function () {
+        if (this.body == "") {
+            return false;
         }
         else {
-            return "";
+            return true;
         }
-        ;
+    };
+    FormComponent.prototype.dateValid = function () {
+        if (this.dateTimeService.getDateTimeFromJSON(this.date, this.time) < this.dateTimeService.getDateTimeNow()) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    };
+    FormComponent.prototype.newReminder = function () {
+        var timeToWork = this.dateTimeService.getDateTimeFromJSON(this.date, this.time);
+        return new Reminder(this.body, timeToWork, this.cookieService.get("RemindrsApp"));
     };
     __decorate([
-        Input(),
-        __metadata("design:type", Reminder)
-    ], FormComponent.prototype, "reminder", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Array)
-    ], FormComponent.prototype, "reminders", void 0);
+        Output(),
+        __metadata("design:type", Object)
+    ], FormComponent.prototype, "add", void 0);
     FormComponent = __decorate([
         Component({
             selector: 'form-reminders',
             templateUrl: './form.component.html',
         }),
-        __metadata("design:paramtypes", [HttpService, CookieService,
+        __metadata("design:paramtypes", [CookieService,
+            DateTimeService,
             NotificationService])
     ], FormComponent);
     return FormComponent;

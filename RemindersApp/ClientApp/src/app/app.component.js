@@ -10,17 +10,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { CookieService } from "ngx-cookie-service";
 import { NotificationService } from './services/notification.service';
+import { HttpService } from './services/http.service';
 var AppComponent = /** @class */ (function () {
-    function AppComponent(cookieService, notificationsService) {
+    function AppComponent(cookieService, notificationsService, httpService) {
         this.cookieService = cookieService;
         this.notificationsService = notificationsService;
+        this.httpService = httpService;
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (!this.cookieService.check("RemindrsApp")) {
             this.cookieService.set("RemindrsApp", this.newCookie(8));
         }
+        this.loadReminders();
         setInterval(function () { _this.notificationsService.checkNotification(_this.reminders); }, 1000);
+    };
+    AppComponent.prototype.loadReminders = function () {
+        var _this = this;
+        this.httpService.getReminders()
+            .subscribe(function (data) { return _this.reminders = data; });
+    };
+    AppComponent.prototype.delete = function (r) {
+        var _this = this;
+        this.httpService.deleteReminder(r.idReminder)
+            .subscribe(function (data) { return _this.loadReminders(); });
+    };
+    AppComponent.prototype.add = function (r) {
+        var _this = this;
+        this.httpService.createReminder(r)
+            .subscribe(function (data) { return _this.reminders.push(data); });
     };
     AppComponent.prototype.newCookie = function (length) {
         var cookie = "";
@@ -35,7 +53,8 @@ var AppComponent = /** @class */ (function () {
             templateUrl: './app.component.html',
         }),
         __metadata("design:paramtypes", [CookieService,
-            NotificationService])
+            NotificationService,
+            HttpService])
     ], AppComponent);
     return AppComponent;
 }());

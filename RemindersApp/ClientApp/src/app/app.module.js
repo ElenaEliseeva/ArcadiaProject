@@ -14,6 +14,9 @@ import { PushNotificationsModule } from "ng-push";
 import { ListComponent } from "./list/list.component";
 import { FormComponent } from './form/form.component';
 import { AppComponent } from './app.component';
+import { HttpService } from './services/http.service';
+import { NotificationService } from './services/notification.service';
+import { DateTimeService } from './services/datetime.service';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -23,7 +26,7 @@ var AppModule = /** @class */ (function () {
                 NgbModule, HttpClientModule, PushNotificationsModule],
             declarations: [AppComponent, ListComponent, FormComponent],
             bootstrap: [AppComponent],
-            providers: [CookieService]
+            providers: [CookieService, HttpService, NotificationService, DateTimeService]
         })
     ], AppModule);
     return AppModule;

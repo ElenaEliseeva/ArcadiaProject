@@ -7,28 +7,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input } from '@angular/core';
-import { HttpService } from '../services/http.service';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { DateTimeService } from '../services/datetime.service';
 var ListComponent = /** @class */ (function () {
-    function ListComponent(httpService) {
-        this.httpService = httpService;
+    function ListComponent(dateTimeService) {
+        this.dateTimeService = dateTimeService;
+        this.delete = new EventEmitter();
     }
-    ListComponent.prototype.ngOnInit = function () {
-        this.loadReminders();
-    };
-    ListComponent.prototype.loadReminders = function () {
-        var _this = this;
-        this.httpService.getReminders()
-            .subscribe(function (data) { return _this.reminders = data; });
-    };
-    ListComponent.prototype.delete = function (r) {
-        var _this = this;
-        this.httpService.deleteReminder(r.idReminder)
-            .subscribe(function (data) { return _this.loadReminders(); });
+    ListComponent.prototype.deleteReminder = function (reminder) {
+        this.delete.emit(reminder);
     };
     ListComponent.prototype.done = function (reminder) {
-        var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
-        var timeNow = new Date().toLocaleString('ko-KR', options);
+        var timeNow = this.dateTimeService.getDateTimeNow();
         if (reminder.timeToWork > timeNow) {
             return false;
         }
@@ -40,12 +30,16 @@ var ListComponent = /** @class */ (function () {
         Input(),
         __metadata("design:type", Array)
     ], ListComponent.prototype, "reminders", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], ListComponent.prototype, "delete", void 0);
     ListComponent = __decorate([
         Component({
             selector: 'list-reminders',
             templateUrl: './list.component.html',
         }),
-        __metadata("design:paramtypes", [HttpService])
+        __metadata("design:paramtypes", [DateTimeService])
     ], ListComponent);
     return ListComponent;
 }());
