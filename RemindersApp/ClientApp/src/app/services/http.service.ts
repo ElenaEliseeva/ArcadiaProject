@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Reminder } from '../models/reminder';
 
 @Injectable()
-export class DataService {
+export class HttpService {
 
     private url = "http://localhost:5000/api/Reminders";
 

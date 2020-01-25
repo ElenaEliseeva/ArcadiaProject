@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from "ngx-cookie-service";
 import { PushNotificationsModule } from "ng-push";
 import { ListComponent } from "./list/list.component";
+import { FormComponent } from './form/form.component';
 import { AppComponent } from './app.component';
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -20,7 +21,7 @@ var AppModule = /** @class */ (function () {
         NgModule({
             imports: [BrowserModule, FormsModule,
                 NgbModule, HttpClientModule, PushNotificationsModule],
-            declarations: [AppComponent, ListComponent],
+            declarations: [AppComponent, ListComponent, FormComponent],
             bootstrap: [AppComponent],
             providers: [CookieService]
         })

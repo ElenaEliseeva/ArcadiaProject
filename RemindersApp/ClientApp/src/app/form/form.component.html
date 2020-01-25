@@ -1,0 +1,41 @@
+﻿<form needs-validation>
+    <div class="row align-items-center my-3">
+
+        <div class="col-5 mx-sm-1 mb-2">
+            <div class="input-group ">
+                <input class="form-control" placeholder="Текст заметки" [(ngModel)]="body" name="body" />
+            </div>
+        </div>
+
+        <div class="col mx-sm-1 mb-2">
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="date" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col mx-sm-1 mb-2">
+            <ngb-timepicker [(ngModel)]="time" name="time" [spinners]="false"></ngb-timepicker>
+        </div>
+
+        <div class="col-3 mx-sm-1 mb-2">
+            <button *ngIf="notificationService.premissionGranted();else askPremission"
+                    class="btn btn-outline-primary btn-block" (click)="addReminder()">
+                Добавить
+            </button>
+            <ng-template #askPremission>
+                <button class="btn btn-outline-secondary btn-block" (click)="notificationService.requestPermission()">
+                    Включить уведомления
+                </button>
+            </ng-template>
+        </div>
+    </div>
+</form>
+<div *ngIf="!dateValid()" class="alert alert-warning text-center">
+    Проверьте время и дату
+</div>
+
+

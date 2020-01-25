@@ -1,36 +1,4 @@
 ﻿<div class="container">
-    <form>
-        <div class="row align-items-center my-3">
-
-            <div class="col-5 mx-sm-1 mb-2">
-                <div class="input-group ">
-                    <input class="form-control" placeholder="Текст заметки" [(ngModel)]="body" name="body" />
-                </div>
-            </div>
-
-            <div class="col mx-sm-1 mb-2">
-                <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd"
-                           name="date" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col mx-sm-1 mb-2">
-                <ngb-timepicker [(ngModel)]="time" name="time" [spinners]="false"></ngb-timepicker>
-            </div>
-
-            <div class="col-3 mx-sm-1 mb-2">
-                <button *ngIf="this.pushNotificationsService.permission == 'granted'" 
-                        class="btn btn-outline-primary btn-block" (click)="add()">Добавить</button>
-                <button *ngIf="this.pushNotificationsService.permission != 'granted'"
-                        class="btn btn-outline-secondary btn-block" (click)="requestPermission()">Включить уведомления</button>
-            </div>
-
-        </div>
-    </form>
-
+    <form-reminders (add) ="add($event)"></form-reminders>
     <list-reminders [reminders] ="reminders" (delete) ="delete($event)"></list-reminders>
 </div>
