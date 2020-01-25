@@ -1,7 +1,7 @@
 ﻿import { Component, Input, EventEmitter, Output} from '@angular/core';
 
-import { Reminder } from '../models/reminder';
-import { DateTimeService } from '../services/datetime.service';
+import { Reminder } from '../../models/reminder';
+import { DateTimeService } from '../../services/datetime.service';
 
 
 @Component({

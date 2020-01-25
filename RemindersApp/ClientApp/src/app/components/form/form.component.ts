@@ -1,9 +1,9 @@
 ﻿import { Component, EventEmitter, Output} from '@angular/core';
 import { CookieService } from "ngx-cookie-service";
 
-import { NotificationService } from '../services/notification.service';
-import { DateTimeService } from '../services/datetime.service';
-import { Reminder } from '../models/reminder';
+import { NotificationService } from '../../services/notification.service';
+import { DateTimeService } from '../../services/datetime.service';
+import { Reminder } from '../../models/reminder';
 
 
 @Component({

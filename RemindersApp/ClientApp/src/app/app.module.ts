@@ -6,8 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from "ngx-cookie-service";
 import { PushNotificationsModule } from "ng-push";
 
-import { ListComponent } from "./list/list.component";
-import { FormComponent } from './form/form.component';
+import { ListComponent } from "./components/list/list.component";
+import { FormComponent } from './components/form/form.component';
 import { AppComponent } from './app.component';
 import { HttpService } from './services/http.service';
 import { NotificationService } from './services/notification.service'

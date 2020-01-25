@@ -38,6 +38,5 @@ export class AppComponent implements OnInit {
         this.httpService.createReminder(r)
             .subscribe((data: Reminder) => this.reminders.push(data));
     }
-
-    
+ 
 }
