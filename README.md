@@ -6,14 +6,18 @@
 
 Открыть командную сторку в корне проекта.
 
-Для запуска бэка 
-```
-cd RemindersApp
-dotnet run
-```
 Для запуска фронта 
 ```
 cd RemindersApp/ClientApp
 npm install
 npm run dev
 ```
+Откроется страница http://localhost:7000/
+
+Для запуска бэка 
+```
+cd RemindersApp
+dotnet run
+```
+
+Обновить страницу.
